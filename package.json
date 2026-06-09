@@ -1,0 +1,24 @@
+{
+  "name": "react-2fa-totp",
+  "version": "1.0.0",
+  "description": "A reusable 2FA TOTP component for Next.js and React",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.tsx --format cjs,esm --dts",
+    "dev": "tsup src/index.tsx --watch"
+  },
+  "keywords": ["2fa", "totp", "react", "nextjs", "authentication"],
+  "author": "mubeen3011",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "*",
+    "react": "*",
+    "tsup": "*",
+    "typescript": "*"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  }
+}
