@@ -44,15 +44,30 @@ export async function POST(request: Request) {
         return NextResponse.json({ data: { enabled: false } })
     }
 
-    if (method === 'generate_2fa_secret') {
-        // Generate TOTP secret and QR code, save secret to DB
-        return NextResponse.json({
-            data: {
-                secret: 'YOUR_GENERATED_SECRET',
-                qr_code: 'YOUR_QR_CODE_BASE64_IMAGE',
+   if (method === 'generate_2fa_secret') {
+    // EXAMPLE — hardcoded for developer reference
+    // In production, replace these with dynamic values:
+    //
+    // secret      → generate with: authenticator.generateSecret()         (npm: otplib)
+    // qr_code     → generate with: QRCode.toDataURL(otpauth_url)          (npm: qrcode)
+    // otpauth_url → generate with: authenticator.keyuri(email, app, secret)
+    //
+    // otpauth URL format:
+    // otpauth://totp/<AppName>:<userEmail>?secret=<secret>&issuer=<AppName>
+
+    const exampleSecret = 'JBSWY3DPEHPK3PXP'   // Base32 encoded secret key
+    const exampleEmail  = 'user@example.com'     // Replace: logged-in user's email
+    const appName       = 'MyApp'                // Replace: your app name
+
+    return NextResponse.json({
+        data: {
+            secret: exampleSecret,
+            qr_code: `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=otpauth://totp/${appName}:${exampleEmail}?            secret=${exampleSecret}&issuer=${appName}`,
+                        otpauth_url: `otpauth://totp/${appName}:${exampleEmail}?secret=${exampleSecret}&issuer=${appName}`
+                    }
+                })
             }
-        })
-    }
+
 
     if (method === 'verify_2fa_code') {
         // Verify 6-digit code during setup, enable 2FA in DB
